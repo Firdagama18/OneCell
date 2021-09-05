@@ -1,183 +1,72 @@
-eService`) REFERENCES `keteranganlayanan` (`KodeService`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-
--- Dumping data for table t-cell.daftarpelanggan: ~20 rows (approximately)
-/*!40000 ALTER TABLE `daftarpelanggan` DISABLE KEYS */;
-INSERT INTO `daftarpelanggan` (`KodePerusahaan`, `NamaPerusahaan`, `Kota`, `KodeService`) VALUES
-	(1, 'BPJS KETENAGAKERJAAN', 'Jakarta', 'INT'),
-	(2, 'PT AXA MANDIRI FINANCIAL SERVICE', 'Surabaya', 'INT'),
-	(3, 'PT B BRAUN', 'Bandung', 'TV'),
-	(4, 'PT BANK ARTHA GRAHA INTERNASIONAL TBK', 'Jakarta', 'TEL'),
-	(5, 'PT BANK BUKOPIN', 'Jakarta', 'TEL'),
-	(6, 'PT BANK KESEJAHTERAAN EKONOMI', 'Malang', 'SV'),
-	(7, 'PT BANK MASPION', 'Malang', 'INT'),
-	(8, 'PT BANK MNC INTERNATIONAL TBK', 'Jakarta', 'TEL INTER'),
-	(9, 'PT BANK NEGARA INDONESIA \r\n', 'Surabaya', 'TEL INTER'),
-	(10, 'PT BANK SYARIAH MANDIRI', 'Surabaya', 'SV'),
-	(11, 'PT MARAZAVALAS', 'Jogja', 'TEL INTER'),
-	(12, 'PT SCHNEIDER INDONESIA', 'Tanggerang', 'SV'),
-	(13, 'PT TRAKINDO UTAMA', 'Semarang', 'SV'),
-	(14, 'SILKAIR PRIVATE LIMITED', 'Jakarta', 'TEL INTER'),
-	(15, 'PT SINAR INDONESIA HOTEL', 'Surakarta', 'TEL'),
-	(16, 'PT TEKNINDO PROPERTY', 'Kediri', 'INT'),
-	(17, 'PT VIFA MANDIRI PRATAMA', 'Bogor', 'INT'),
-	(18, 'PT MOWILEX INDONESIA', 'Bogor', 'TV'),
-	(19, 'PT PANAKUKANG MAJU BERSAMA', 'Cimahi', 'TV'),
-	(20, 'PT SUKSES PRATAMA HOTELINDO', 'Karawang', 'TEL');
-/*!40000 ALTER TABLE `daftarpelanggan` ENABLE KEYS */;
-
--- Dumping structure for table t-cell.keteranganlayanan
-CREATE TABLE IF NOT EXISTS `keteranganlayanan` (
-  `KodeService` char(50) CHARACTER SET utf8 NOT NULL,
-  `Layanan` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `KodeStaff` char(50) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  PRIMARY KEY (`KodeService`),
-  KEY `FK_keteranganlayanan_staff` (`KodeStaff`),
-  CONSTRAINT `FK_keteranganlayanan_staff` FOREIGN KEY (`KodeStaff`) REFERENCES `staff` (`KodeStaff`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- Dumping data for table t-cell.keteranganlayanan: ~5 rows (approximately)
-/*!40000 ALTER TABLE `keteranganlayanan` DISABLE KEYS */;
-INSERT INTO `keteranganlayanan` (`KodeService`, `Layanan`, `KodeStaff`) VALUES
-	('INT', 'Internet', 'LG N80'),
-	('SV', 'Server', 'SJ K33'),
-	('TEL', 'Telepon', 'NM B01'),
-	('TEL INTER', 'Telepon Internasional', 'TS L65'),
-	('TV', 'Televisi', 'BR N91');
-/*!40000 ALTER TABLE `keteranganlayanan` ENABLE KEYS */;
-
--- Dumping structure for table t-cell.komplainpelanggan
-CREATE TABLE IF NOT EXISTS `komplainpelanggan` (
-  `KodePerusahaan` int(11) NOT NULL,
-  `Komplain` varchar(50) NOT NULL DEFAULT '',
-  `TanggalKomplain` date NOT NULL,
-  PRIMARY KEY (`KodePerusahaan`),
-  CONSTRAINT `FK_komplainpelanggan_daftarpelanggan` FOREIGN KEY (`KodePerusahaan`) REFERENCES `daftarpelanggan` (`KodePerusahaan`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- Dumping data for table t-cell.komplainpelanggan: ~12 rows (approximately)
-/*!40000 ALTER TABLE `komplainpelanggan` DISABLE KEYS */;
-INSERT INTO `komplainpelanggan` (`KodePerusahaan`, `Komplain`, `TanggalKomplain`) VALUES
-	(1, 'Lupa Login', '2020-07-17'),
-	(2, 'Gangguan Jaringan', '2020-09-28'),
-	(4, 'Hardware Rusak', '2020-09-03'),
-	(7, 'Software Update Gagal', '2020-10-01'),
-	(8, 'Gangguan Jaringan', '2020-10-01'),
-	(10, 'Lupa Login', '2020-09-27'),
-	(11, 'Lupa Login', '2020-10-27'),
-	(12, 'Software Update Gagal', '2020-10-22'),
-	(16, 'Gangguan Jaringan', '2020-10-28'),
-	(18, 'Hardware Rusak', '2020-10-20'),
-	(19, 'Software Update Gagal', '2020-10-29'),
-	(20, 'Gangguan Jaringan', '2020-10-27');
-/*!40000 ALTER TABLE `komplainpelanggan` ENABLE KEYS */;
-
--- Dumping structure for table t-cell.pembayaran
-CREATE TABLE IF NOT EXISTS `pembayaran` (
-  `KodePerusahaan` int(11) NOT NULL AUTO_INCREMENT,
-  `JumlahPembayaran` int(11) DEFAULT NULL,
-  `Metode` char(50) DEFAULT NULL,
-  PRIMARY KEY (`KodePerusahaan`),
-  CONSTRAINT `FK_pembayaran_daftarpelanggan` FOREIGN KEY (`KodePerusahaan`) REFERENCES `daftarpelanggan` (`KodePerusahaan`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
-
--- Dumping data for table t-cell.pembayaran: ~17 rows (approximately)
-/*!40000 ALTER TABLE `pembayaran` DISABLE KEYS */;
-INSERT INTO `pembayaran` (`KodePerusahaan`, `JumlahPembayaran`, `Metode`) VALUES
-	(1, 14500, 'Transfer'),
-	(2, 10000, 'Transfer'),
-	(3, 12500, 'Tunai'),
-	(4, 23000, 'Transfer'),
-	(5, NULL, NULL),
-	(6, 34000, 'Transfer'),
-	(7, 9000, 'Transfer'),
-	(8, 12000, 'Transfer'),
-	(9, 20000, 'Tunai'),
-	(10, 8500, 'Tunai'),
-	(11, NULL, NULL),
-	(12, NULL, NULL),
-	(13, NULL, NULL),
-	(14, 34000, 'Transfer'),
-	(15, NULL, NULL),
-	(16, NULL, NULL),
-	(17, NULL, NULL),
-	(18, 28300, 'Transfer'),
-	(19, 80000, 'Tunai'),
-	(20, 15000, 'Tunai');
-/*!40000 ALTER TABLE `pembayaran` ENABLE KEYS */;
-
--- Dumping structure for table t-cell.staff
-CREATE TABLE IF NOT EXISTS `staff` (
-  `KodeStaff` char(50) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `fName` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '0',
-  `lName` varchar(50) CHARACTER SET utf8 NOT NULL DEFAULT '0',
-  `Gender` char(50) CHARACTER SET utf8 NOT NULL DEFAULT '0',
-  `Umur` int(10) unsigned NOT NULL DEFAULT '0',
-  `KodeCabang` char(50) NOT NULL,
-  `Gaji` int(11) NOT NULL,
-  PRIMARY KEY (`KodeStaff`),
-  KEY `FK_staff_daftarcabang` (`KodeCabang`),
-  CONSTRAINT `FK_staff_daftarcabang` FOREIGN KEY (`KodeCabang`) REFERENCES `daftarcabang` (`KodeCabang`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- Dumping data for table t-cell.staff: ~5 rows (approximately)
-/*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` (`KodeStaff`, `fName`, `lName`, `Gender`, `Umur`, `KodeCabang`, `Gaji`) VALUES
-	('BR N91', 'Dorothy', 'Shoot', 'F', 51, 'B005', 3500),
-	('LG N80', 'Becky', 'Gems', 'F', 44, 'B002', 3000),
-	('NM B01', 'Jeff', 'Armstrong', 'M', 27, 'B004', 2700),
-	('SJ K33', 'Lane', 'Rogers', 'M', 34, 'B003', 2900),
-	('TS L65', 'Anna', 'Davis', 'F', 39, 'B001', 2850);
-/*!40000 ALTER TABLE `staff` ENABLE KEYS */;
-
--- Dumping structure for table t-cell.teknisi
-CREATE TABLE IF NOT EXISTS `teknisi` (
-  `KodeTeknisi` char(50) NOT NULL DEFAULT '',
-  `fName` varchar(50) NOT NULL DEFAULT '',
-  `lName` varchar(50) NOT NULL DEFAULT '',
-  `Gender` char(50) NOT NULL DEFAULT '',
-  `Umur` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `Gaji` int(11) NOT NULL,
-  PRIMARY KEY (`KodeTeknisi`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- Dumping data for table t-cell.teknisi: ~5 rows (approximately)
-/*!40000 ALTER TABLE `teknisi` DISABLE KEYS */;
-INSERT INTO `teknisi` (`KodeTeknisi`, `fName`, `lName`, `Gender`, `Umur`, `Gaji`) VALUES
-	('AF 33', 'Albert', 'Johnson', 'M', 33, 200),
-	('BJ 88', 'Linda', 'Maroon', 'F', 35, 230),
-	('BM 11', 'Sandy', 'Lee', 'M', 27, 160),
-	('CK 09', 'Cyntia', 'Cortez', 'F', 23, 120),
-	('KJ 82', 'Noel', 'Packer', 'M', 24, 120);
-/*!40000 ALTER TABLE `teknisi` ENABLE KEYS */;
-
--- Dumping structure for table t-cell.tindakankomplain
-CREATE TABLE IF NOT EXISTS `tindakankomplain` (
-  `KodePerusahaan` int(11) NOT NULL DEFAULT '0',
-  `KodeTeknisi` char(50) NOT NULL DEFAULT '',
-  `Tindakan` char(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`KodePerusahaan`),
-  KEY `FK_tindakankomplain_teknisi` (`KodeTeknisi`),
-  CONSTRAINT `FK_tindakankomplain_komplainpelanggan` FOREIGN KEY (`KodePerusahaan`) REFERENCES `komplainpelanggan` (`KodePerusahaan`),
-  CONSTRAINT `FK_tindakankomplain_teknisi` FOREIGN KEY (`KodeTeknisi`) REFERENCES `teknisi` (`KodeTeknisi`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- Dumping data for table t-cell.tindakankomplain: ~10 rows (approximately)
-/*!40000 ALTER TABLE `tindakankomplain` DISABLE KEYS */;
-INSERT INTO `tindakankomplain` (`KodePerusahaan`, `KodeTeknisi`, `Tindakan`) VALUES
-	(1, 'CK 09', 'Done'),
-	(2, 'CK 09', 'Done'),
-	(4, 'AF 33', 'Failed'),
-	(7, 'KJ 82', 'On Process'),
-	(8, 'KJ 82', 'Done'),
-	(10, 'BM 11', 'Done'),
-	(11, 'BM 11', 'On Process'),
-	(12, 'BM 11', 'On Process'),
-	(18, 'AF 33', 'Failed'),
-	(19, 'AF 33', 'On Process');
-/*!40000 ALTER TABLE `tindakankomplain` ENABLE KEYS */;
-
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-
+group: T-Cell
+DaftarPelanggan = {
+kodePerusahaan, namaPerusahaan, kodeService, kota
+'A001', 'BPJS KETENAGAKERJAAN', 'INT', 'Jakarta'
+'A002', 'PT AXA MANDIRI FINANCIAL SERVICE', 'INT', 'Surabaya'
+'A003', 'PT B BRAUN', 'TV', 'Bandung'
+'A004', 'PT BANK ARTHA GRAHA INTERNASIONAL TBK', 'TEL', 'Jakarta'
+'A005', 'PT BANK BUKOPIN ', 'TEL', 'Jakarta'
+'A006', 'PT BANK KESEJAHTERAAN EKONOMI', 'SV', 'Malang'
+'A007', 'PT BANK MASPION', 'INT', 'Malang'
+'A008', 'PT BANK MNC INTERNATIONAL TBK', 'TEL INTER', 'Jakarta'
+'A009', 'PT BANK NEGARA INDONESIA ', 'TEL', 'Surabaya'
+'A010', 'PT BANK SYARIAH MANDIRI', 'SV', 'Surabaya'
+}
+KeteranganLayanan = {
+kodeService, layanan, kodeStaff
+'TEL', 'Telepon', 'NM B01'
+'TEL INTER', 'Telepon Internasional', 'TS L65'
+'INT', 'Internet', 'LG N80'
+'TV', 'Televisi', 'BR N91'
+'SV', 'Server', 'SJ K33'
+}
+InformasiPembayaranPelanggan = {
+kodePerusahaan, pembayaran, metode
+'A006', 34000, 'Transfer'
+'A009', 20000, 'Tunai'
+'A008', 12000, 'Transfer'
+'A001', 14500, 'Transfer'
+'A002', 10000, 'Transfer'
+'A010', 8500, 'Tunai'
+'A003', 12500, 'Tunai'
+'A005', null, null
+'A004', 23000, 'Transfer'
+'A007', 9000, 'Transfer'
+}
+Staff = {
+kodeStaff, fName, lName, sex, umur
+'TS L65', 'Anna', 'Davis', 'F', 39
+'LG N80', 'Becky', 'Gems', 'F', 44
+'BR N91', 'Dorothy', 'Shoot', 'F', 51
+'NM B01', 'Jeff', 'Armstrong', 'M', 27
+'SJ K33', 'Lane', 'Rogers', 'M', 34
+}
+KomplainPelanggan = {
+kodePerusahaan, komplain, tanggal
+'A008', 'Jaringan Gangguan', '1-Oct-20'
+'A002', 'Jaringan Gangguan', '28-Sep-20'
+'A004', 'Hardware Rusak', '3-Sep-20'
+'A010', 'Lupa Login', '27-Sep-20'
+'A001', 'Lupa Login', '17-Aug-20'
+}
+TindakanKomplain = {
+kodePerusahaan, kodeTeknisi, status
+'A010', 'BM 11', 'Done'
+'A002', 'CK 09', 'Done'
+'A004', 'AF 33', 'Failed'
+}
+Teknisi = {
+kodeTeknisi, fName, lName, sex, umur
+'AF 33', 'Albert', 'Johnson', 'M', 33
+'CK 09', 'Cyntia', 'Cortez', 'F', 23
+'BJ 88', 'Linda', 'Maroon', 'F', 35
+'KJ 82', 'Noel', 'Packer', 'M', 24
+'BM 11', 'Sandy', 'Lee', 'M', 27
+}
+DaftarCabang = {
+kodeCabang, kotaCabang, alamat, status
+'B003', 'Jakarta', 'Jl. Sudirman No.3', 'HQ'
+'B002', 'Surabaya', 'Jl. Ir Soekarno No.44', 'Cabang'
+'B005', 'Jogja', 'Jl. Agus Salim No.21', 'Cabang'
+'B008', 'Semarang', 'Jl. Murbei No.1', 'Cabang'
+}
